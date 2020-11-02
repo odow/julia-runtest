@@ -43,4 +43,4 @@ runs:
           kwargs[:coverage] = ${{ inputs.coverage }
           ${{ inputs.force_latest_compat }} && (kwargs[:force_latest_compat] = ${{ inputs.force_latest_compat }})
           Pkg.test(; kwargs...)'
-  shell: bash
+      shell: bash
