@@ -42,7 +42,7 @@ runs:
           kwargs = Dict{Symbol, Any}()
           kwargs[:coverage] = ${{ inputs.coverage }}
           if ${{ inputs.force_latest_compat }}
-              if VERSION > VersionNumber(1, 6, typemax(UInt32)) # excludes 1.6, includes 1.7-DEV, includes 1.7
+              if VERSION >= v"1.7.0-" # excludes 1.6, includes 1.7-DEV, includes 1.7
                   kwargs[:force_latest_compat] = true
               else
                   @warn("The `force_latest_compat` option requires at least Julia 1.7 or greater", VERSION)
