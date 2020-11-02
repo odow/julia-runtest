@@ -41,6 +41,12 @@ runs:
           using Pkg
           kwargs = Dict{Symbol, Any}()
           kwargs[:coverage] = ${{ inputs.coverage }
-          ${{ inputs.force_latest_compat }} && (kwargs[:force_latest_compat] = ${{ inputs.force_latest_compat }})
+          if ${{ inputs.force_latest_compat }}
+              if VERSION > VersionNumber(1, 6, typemax(UInt32)) # excludes 1.6, includes 1.7-DEV, includes 1.7
+                  kwargs[:force_latest_compat] = true
+              else
+                  @warn("The `force_latest_compat` option is not supported in this version of Julia", VERSION")
+              end
+          end
           Pkg.test(; kwargs...)'
       shell: bash
